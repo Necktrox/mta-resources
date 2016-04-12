@@ -1,0 +1,16 @@
+<meta>
+    <oop>true</oop>
+    <info name="Map Meta Parser" author="Necktrox" version="1.0.0" type="script" description="Extracts map resource meta information for quick lookup"></info>
+    <script type="server" src="File.Extension.lua"></script>
+    <script type="server" src="XML.Extension.lua"></script>
+    <script type="server" src="console.lua"></script>
+    <script type="server" src="parser.lua"></script>
+    <script type="server" src="api.lua"></script>
+    <export type="server" function="getMapMeta"></export>
+    <export type="server" function="getMapMetaInfo"></export>
+    <export type="server" function="getMapMetaFiles"></export>
+    <export type="server" function="getMapMetaScripts"></export>
+    <export type="server" function="getMapMetaIncludes"></export>
+    <export type="server" function="getMapMetaSettings"></export>
+    <export type="server" function="getMapMetaMaps"></export>
+</meta>
