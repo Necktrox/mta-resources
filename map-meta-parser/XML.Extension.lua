@@ -43,7 +43,7 @@ function XML:iterByTag(nodeTag)
 
         if node then
             index = index + 1
-            return index, node
+            return (index - 1), node
         else
             return nil
         end
