@@ -76,7 +76,7 @@ function table.each(self, callback)
     assert(type(callback) == "function", "expected function at argument 2, got ".. type(callback))
 
     for key, value in pairs(self) do
-        self[key] = callback(value)
+        callback(key, value)
     end
 
     return self
