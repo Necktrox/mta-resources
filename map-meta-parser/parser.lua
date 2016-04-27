@@ -196,7 +196,7 @@ function parseMapResource(map)
 
     local files = {}
 
-    for index, node in metaRoot:iterByTag("files") do
+    for index, node in metaRoot:iterByTag("file") do
         local attributeSrc = node:getAttribute("src")
 
         if attributeSrc and attributeSrc:len() > 0 then
@@ -226,7 +226,7 @@ function parseMapResource(map)
 
     local includes = {}
 
-    for index, node in metaRoot:iterByTag("files") do
+    for index, node in metaRoot:iterByTag("include") do
         local attributeResource = node:getAttribute("resource")
 
         if attributeResource and attributeResource:len() > 0 then
