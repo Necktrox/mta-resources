@@ -87,23 +87,34 @@ function table.maptry(self, callback, ...)
     return true
 end
 
-function table.each(self, callback)
+function table.each(self, callback, ...)
     assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
     assert(type(callback) == "function", "expected function at argument 2, got ".. type(callback))
 
     for key, value in pairs(self) do
-        callback(key, value)
+        callback(key, value, ...)
     end
 
     return self
 end
 
-function table.eachtry(self, callback)
+function table.valueach(self, callback, ...)
     assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
     assert(type(callback) == "function", "expected function at argument 2, got ".. type(callback))
 
     for key, value in pairs(self) do
-        if not callback(key, value) then
+        callback(value, ...)
+    end
+
+    return self
+end
+
+function table.eachtry(self, callback, ...)
+    assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
+    assert(type(callback) == "function", "expected function at argument 2, got ".. type(callback))
+
+    for key, value in pairs(self) do
+        if not callback(key, value, ...) then
             return false
         end
     end
@@ -171,17 +182,14 @@ function table.unsetvalue(self, value)
     for key, data in pairs(self) do
         if data == value then
             self[key] = nil
-            return key
         end
     end
-
-    return false
 end
 
 function table.random(self)
     assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
     local length = #self
-    return length > 0 and self[math.random(#self)] or nil
+    return length > 0 and self[math.random(length)] or nil
 end
 
 function table.copy(self)
@@ -283,25 +291,15 @@ function table.reverse(self)
     return self
 end
 
-function table.destroy(self, deepdestroy)
+function table.destroy(self, depth)
     assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
-    assert(deepdestroy == nil or type(deepdestroy) == "boolean", "expected boolean at argument 2, got ".. type(deepdestroy))
+    assert(depth == nil or type(depth) == "number", "expected number at argument 2, got ".. type(depth))
 
-    local keys = {}
-    local index = 0
-
-    for key in pairs(self) do
-        if deepdestroy or type(self[key]) ~= "table" then
-            index = index + 1
-            keys[index] = key
+    for key, value in pairs(self) do
+        if type(value) == "table" and depth ~= nil and depth > 0 then
+            table.destroy(value, depth - 1)
         end
-    end
-
-    if index == 0 then
-        return self
-    end
-
-    for index, key in pairs(keys) do
+        
         self[key] = nil
     end
 
