@@ -136,7 +136,7 @@ function table.merge(self, other, overwrite)
     return self
 end
 
-function table.insert(self, other)
+function table.insertmerge(self, other)
     assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
     assert(type(other) == "table", "expected table at argument 2, got ".. type(other))
 
