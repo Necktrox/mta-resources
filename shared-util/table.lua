@@ -383,3 +383,29 @@ function table.json(self, compact)
     -- 3) Remove the array brackets around the JSON object (and the spaces when compact is off)
     return toJSON(table.rawcopy(self), compact):sub(compact and 2 or 3, compact and -2 or -3)
 end
+
+function table.filter(self, callback, ...)
+    assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
+    assert(type(callback) == "function", "expected function at argument 2, got ".. type(callback))
+
+    for key, value in pairs(self) do
+        if not callback(value, ...) then
+            self[key] = nil
+        end
+    end
+
+    return self
+end
+
+function table.ifilter(self, callback, ...)
+    assert(type(self) == "table", "expected table at argument 1, got ".. type(self))
+    assert(type(callback) == "function", "expected function at argument 2, got ".. type(callback))
+
+    for index = 1, #self do
+        if not callback(self[index], ...) then
+            table.remove(self, index)
+        end
+    end
+    
+    return self
+end
